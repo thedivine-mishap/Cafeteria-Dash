@@ -12,14 +12,20 @@ class Kitchen:
         # 1. Check if we have an empty stove
         if len(self.slots) >= self.max_slots:
             print("Kitchen is full!")
-            return
+            return (False, "full")
 
         # 2. Check if we have ingredients
         recipe = RECIPES[dish_name]
+        missing = {}
         for ingredient, qty in recipe.items():
-            if self.inventory.items.get(ingredient, 0) < qty:
-                print(f"Missing {ingredient} for {dish_name}")
-                return
+            have = self.inventory.items.get(ingredient, 0)
+            if have < qty:
+                missing[ingredient] = qty - have
+
+        if missing:
+            # Return missing ingredients with quantities required
+            print(f"Missing ingredients for {dish_name}: {missing}")
+            return (False, missing)
 
         # 3. Deduct ingredients
         for ingredient, qty in recipe.items():
@@ -34,6 +40,7 @@ class Kitchen:
         }
         self.slots.append(new_task)
         print(f"Started cooking {dish_name}")
+        return (True, None)
 
     def update(self, dt):
         # Loop backwards so we can remove items safely
