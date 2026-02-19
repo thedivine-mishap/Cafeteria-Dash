@@ -123,7 +123,9 @@ while running:
                             # --- SUCCESSFUL SERVE ---
                             game_inventory.cooked_food[dish_wanted] -= 1
                             game_inventory.money += MENU_PRICES[dish_wanted]
-                            front_customer.kill() 
+                            # Mark the customer as served so they don't count as "lost"
+                            front_customer.served = True
+                            front_customer.kill()
                             print(f"Served {dish_wanted}! +${MENU_PRICES[dish_wanted]}")
                         else:
                             print(f"You don't have {dish_wanted}!")
@@ -163,7 +165,8 @@ while running:
 
         # Queue Maintenance
         survivors = [c for c in customer_queue if c.alive()]
-        lost_this_frame = len(customer_queue) - len(survivors)
+        # Only count customers who died from running out of patience (not served)
+        lost_this_frame = sum(1 for c in customer_queue if not c.alive() and not getattr(c, 'served', False))
         lost_customers += lost_this_frame
         customer_queue = survivors
 
