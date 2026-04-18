@@ -7,17 +7,20 @@ from assets import load_image
 from settings import PATIENCE_MEAN, PATIENCE_STD
 
 class Customer(pygame.sprite.Sprite):
-    def __init__(self, pos):
+    def __init__(self, pos, game_clock=0.0):
         super().__init__()
         # Use the same test sprite for now
         self.image = load_image("images/test_sprite.png")
         # Tint it slightly different (Red-ish) so we know it's a customer
-        self.image.fill((200, 100, 100), special_flags=pygame.BLEND_RGB_MULT)
+        #self.image.fill((200, 100, 100), special_flags=pygame.BLEND_RGB_MULT)
         
         self.rect = self.image.get_rect(topleft=pos)
 
         # Pick a random dish from the keys of the RECIPES dictionary
         self.order = random.choice(list(RECIPES.keys()))
+
+        # Timestamp when the customer arrived (for wait-time tracking)
+        self.arrival_time = game_clock
         
         # Stats using Normal Distribution
         self.patience = max(10, np.random.normal(PATIENCE_MEAN, PATIENCE_STD))
