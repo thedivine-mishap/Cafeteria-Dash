@@ -40,7 +40,7 @@ Ensure you have Python 3.8+ installed on your system. You will also need to inst
 Open your terminal or command prompt and run the following command to install the required libraries:
 
 ```bash
-pip install pygame numpy pandas
+pip install pygame numpy pandas matplotlib
 ```
 
 ### 2. Launching the App
