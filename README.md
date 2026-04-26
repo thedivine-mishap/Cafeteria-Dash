@@ -35,7 +35,7 @@ The project is structured modularly:
 ## ⚙️ How to Run the Project
 
 ### 1. Prerequisites
-Ensure you have Python 3.8+ installed on your system. You will also need to install the required dependencies: `pygame`, `numpy`, and `pandas`.
+Ensure you have Python 3.8+ installed on your system. You will also need to install the required dependencies: `pygame`, `numpy`,`pandas` and `matplotlib`.
 
 Open your terminal or command prompt and run the following command to install the required libraries:
 
